@@ -9,5 +9,6 @@ async def print_yielded_values():
     async for i in async_generator():
         result.append(i)
     print(result)
+    print(async_generator.__annotations__)
 
 asyncio.run(print_yielded_values())
