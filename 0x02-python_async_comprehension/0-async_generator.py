@@ -4,9 +4,10 @@ Async Generator
 """
 import random
 import asyncio
+from typing import Generator
 
 
-async def async_generator():
+async def async_generator() -> Generator:
     """loop 10 times each time waits for 1 second
         yields a random number from 0 - 10
     """
