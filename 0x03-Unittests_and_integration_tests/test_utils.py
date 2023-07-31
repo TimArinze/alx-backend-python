@@ -29,10 +29,6 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     """Testing get_json function"""
-    #test_data = [
-            #("http://example.com", {"payload": True}),
-            #]
-    # @parameterized.expand(test_data)
     @patch('utils.requests.get')
     def test_get_json(self, mock_get):
         mock_response = MagicMock()
