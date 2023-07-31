@@ -34,12 +34,12 @@ class TestGetJson(unittest.TestCase):
             ("http://holberton.io", {"payload": False})
             ]
     @parameterized.expand(test_data)
-    @patch('utils.requests.get')
-    def test_get_json(self, mock_request, test_url, test_payload):
-        mock_response = MagicMock()
-        mock_response.json.return_value = test_payload
-        mock_request.return_value = mock_response
-        self.assertEqual(utils.get_json(test_url), test_payload)
+    def test_get_json(self, test_url, test_payload):
+        with patch('utils.requests') as mock_request:
+            mock_response = MagicMock()
+            mock_response.json.return_value = test_payload
+            mock_request.get.return_value = mock_response
+            self.assertEqual(utils.get_json(test_url), test_payload)
 
 
 if __name__ == "__main__":
