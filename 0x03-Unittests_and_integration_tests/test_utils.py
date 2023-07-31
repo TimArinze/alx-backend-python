@@ -29,16 +29,17 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     """Testing get_json function"""
-    @patch('utils.requests')
-    def test_get_json(self, mock_get):
+    test_data = [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False})
+            ]
+    @parameterized.expand(test_data)
+    @patch('utils.requests.get')
+    def test_get_json(self, mock_request, test_url, test_payload):
         mock_response = MagicMock()
-        mock_response.json.return_value = {"payload": True}
-        mock_get.get.return_value = mock_response
-        self.assertEqual(utils.get_json("http://example.com"), {"payload": True})
-        mock_response1 = MagicMock()
-        mock_response1.json.return_value = {"payload": False}
-        mock_get.get.return_value = mock_response1
-        self.assertEqual(utils.get_json("http://holberton.io"), {"payload": False})
+        mock_response.json.return_value = test_payload
+        mock_request.return_value = mock_response
+        self.assertEqual(utils.get_json(test_url), test_payload)
 
 
 if __name__ == "__main__":
