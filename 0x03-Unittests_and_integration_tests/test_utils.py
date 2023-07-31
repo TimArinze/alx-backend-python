@@ -33,6 +33,7 @@ class TestGetJson(unittest.TestCase):
             ("http://example.com", {"payload": True}),
             ("http://holberton.io", {"payload": False})
             ]
+
     @parameterized.expand(test_data)
     def test_get_json(self, test_url, test_payload):
         with patch('utils.requests') as mock_request:
@@ -40,6 +41,27 @@ class TestGetJson(unittest.TestCase):
             mock_response.json.return_value = test_payload
             mock_request.get.return_value = mock_response
             self.assertEqual(utils.get_json(test_url), test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """Testing memoizing function wrap"""
+    def test_memoize(self):
+        class TestClass:
+            """TestClass"""
+            def a_method(self):
+                """a_method"""
+                return 42
+
+            @utils.memoize
+            def a_property(self):
+                """a_property"""
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as mock_method:
+            my_object = TestClass()
+            my_object.a_property
+            my_object.a_property
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
