@@ -47,26 +47,17 @@ class TestMemoize(unittest.TestCase):
     """Testing memoizing function wrap"""
     def test_memoize(self):
         """Test that will test the caching ability of the memoize"""
-
-
         class TestClass:
             """TestClass"""
             def a_method(self):
                 """a_method"""
                 return 42
-
             @utils.memoize
             def a_property(self):
                 """a_property"""
                 return self.a_method()
-
         with patch.object(TestClass, 'a_method') as mock_method:
             test_class = TestClass()
             test_class.a_property
             test_class.a_property
-
             mock_method.assert_called_once()
-
-
-if __name__ == "__main__":
-    unittest.main()
