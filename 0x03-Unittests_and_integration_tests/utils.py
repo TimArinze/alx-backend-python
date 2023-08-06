@@ -2,6 +2,7 @@
 """Generic utilities for github org client.
 """
 import requests
+import asyncio
 from functools import wraps
 from typing import (
         Mapping,
